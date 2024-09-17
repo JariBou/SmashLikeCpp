@@ -24,18 +24,6 @@ protected:
 	UPROPERTY(EditAnywhere)
 	TArray<ASmashCharacter*> CharactersInsideArena;
 	
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<ASmashCharacter> SmashCharacterP0;
-	
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<ASmashCharacter> SmashCharacterP1;
-	
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<ASmashCharacter> SmashCharacterP2;
-	
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<ASmashCharacter> SmashCharacterP3;
-	
 	
 private:
 	void FindPlayerStartActorsInArena(TArray<AArenaPlayerStart*>& OutPlayerStartActors) const;
