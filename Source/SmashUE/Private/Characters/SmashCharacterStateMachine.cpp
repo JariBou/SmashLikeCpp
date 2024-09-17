@@ -11,6 +11,33 @@ void USmashCharacterStateMachine::Init(ASmashCharacter* InCharacter)
 	Character = InCharacter;
 	FindStates();
 	InitStates();
+
+	ChangeState(ESmashCharacterStateID::Idle);
+}
+
+void USmashCharacterStateMachine::ChangeState(ESmashCharacterStateID NextStateID)
+{
+	USmashCharacterState* NextState = GetState(NextStateID);
+
+	if (NextState == nullptr) return;
+
+	if (CurrentState != nullptr) CurrentState->StateExit(NextStateID);
+
+	ESmashCharacterStateID PreviousStateID = CurrentStateID;
+	CurrentStateID = NextStateID;
+	CurrentState = NextState;
+
+	if (CurrentState != nullptr) CurrentState->StateEnter(PreviousStateID);
+}
+
+USmashCharacterState* USmashCharacterStateMachine::GetState(ESmashCharacterStateID StateID)
+{
+	for (USmashCharacterState* State : AllStates)
+	{
+		if (StateID == State->GetStateID()) return State;
+	}
+
+	return nullptr;
 }
 
 ASmashCharacter* USmashCharacterStateMachine::GetCharacter() const
