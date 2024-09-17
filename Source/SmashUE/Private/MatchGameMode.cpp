@@ -13,6 +13,7 @@ void AMatchGameMode::BeginPlay()
 
 	TArray<AArenaPlayerStart*> PlayerStartPoints;
 	FindPlayerStartActorsInArena(PlayerStartPoints);
+	SpawnCharacters(PlayerStartPoints);
 
 	for (AArenaPlayerStart* PlayerStartPoint : PlayerStartPoints)
 	{
@@ -37,6 +38,24 @@ void AMatchGameMode::FindPlayerStartActorsInArena(TArray<AArenaPlayerStart*>& Ou
 		if (ArenaStart == nullptr) continue;
 
 		OutPlayerStartActors.Add(ArenaStart);
+	}
+}
+
+void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoints)
+{
+	for (AArenaPlayerStart* SpawnPoint : SpawnPoints)
+	{
+		EAutoReceiveInput::Type InputType = SpawnPoint->AutoReceiveInput.GetValue();
+		TSubclassOf<ASmashCharacter> SmashCharacterClass = GetSmashCharacterClassFromInputType(InputType);
+		if (SmashCharacterClass == nullptr) continue;
+
+		ASmashCharacter* NewCharacter = GetWorld()->SpawnActorDeferred<ASmashCharacter>(SmashCharacterClass,SpawnPoint->GetTransform());
+		if (NewCharacter == nullptr) continue;
+
+		NewCharacter->AutoPossessPlayer = SpawnPoint->AutoReceiveInput;
+		NewCharacter->FinishSpawning(SpawnPoint->GetTransform());
+
+		CharactersInsideArena.Add(NewCharacter);
 	}
 }
 
