@@ -3,6 +3,7 @@
 
 #include "MatchGameMode.h"
 
+#include "SmashCharacter.h"
 #include "Arena/ArenaPlayerStart.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -15,7 +16,13 @@ void AMatchGameMode::BeginPlay()
 
 	for (AArenaPlayerStart* PlayerStartPoint : PlayerStartPoints)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, PlayerStartPoint->GetFName().ToString());
+		EAutoReceiveInput::Type InputType = PlayerStartPoint->AutoReceiveInput.GetValue();
+		
+
+		TSubclassOf<ASmashCharacter> SmashCharacterClass = GetSmashCharacterClassFromInputType(InputType);
+		if (SmashCharacterClass == nullptr) continue;
+
+		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, SmashCharacterClass->GetFName().ToString());
 	}
 }
 
@@ -30,5 +37,31 @@ void AMatchGameMode::FindPlayerStartActorsInArena(TArray<AArenaPlayerStart*>& Ou
 		if (ArenaStart == nullptr) continue;
 
 		OutPlayerStartActors.Add(ArenaStart);
+	}
+}
+
+TSubclassOf<ASmashCharacter> AMatchGameMode::GetSmashCharacterClassFromInputType(
+	EAutoReceiveInput::Type InputType) const
+{
+	switch (InputType)
+	{
+		case EAutoReceiveInput::Player0:
+			return SmashCharacterP0;
+		
+		case EAutoReceiveInput::Player1:
+			return SmashCharacterP1;
+		
+		case EAutoReceiveInput::Player2:
+			return SmashCharacterP2;
+		
+		case EAutoReceiveInput::Player3:
+			return SmashCharacterP3;
+		
+		case EAutoReceiveInput::Player4:
+		case EAutoReceiveInput::Player5:
+		case EAutoReceiveInput::Player6:
+		case EAutoReceiveInput::Player7:
+		default:
+			return nullptr;
 	}
 }

@@ -7,6 +7,7 @@
 #include "MatchGameMode.generated.h"
 
 class AArenaPlayerStart;
+class ASmashCharacter;
 
 /**
  * 
@@ -19,6 +20,22 @@ class SMASHUE_API AMatchGameMode : public AGameModeBase
 public:
 	virtual void BeginPlay() override;
 
+protected:
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<ASmashCharacter> SmashCharacterP0;
+	
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<ASmashCharacter> SmashCharacterP1;
+	
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<ASmashCharacter> SmashCharacterP2;
+	
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<ASmashCharacter> SmashCharacterP3;
+	
+	
 private:
 	void FindPlayerStartActorsInArena(TArray<AArenaPlayerStart*>& OutPlayerStartActors) const;
+
+	TSubclassOf<ASmashCharacter> GetSmashCharacterClassFromInputType(EAutoReceiveInput::Type InputType) const;
 };
