@@ -55,6 +55,8 @@ public:
 
 	void InitStateMachine();
 
+	void TickStateMachine(float DeltaTime);
+
 protected:
 	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<USmashCharacterStateMachine> StateMachine;
