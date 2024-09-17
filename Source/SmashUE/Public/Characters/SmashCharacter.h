@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "SmashCharacter.generated.h"
 
+class USmashCharacterStateMachine;
+
 UCLASS()
 class SMASHUE_API ASmashCharacter : public ACharacter
 {
@@ -30,7 +32,6 @@ public:
 
 #pragma endregion
 
-
 #pragma region Orient
 
 public:
@@ -46,4 +47,18 @@ protected:
 
 
 #pragma endregion
+
+#pragma region StateMachine
+
+public:
+	void CreateStateMachine();
+
+	void InitStateMachine();
+
+protected:
+	UPROPERTY()
+	TObjectPtr<USmashCharacterStateMachine> StateMachine;
+	
+#pragma endregion
+	
 };

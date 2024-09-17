@@ -1,10 +1,10 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "MatchGameMode.h"
+#include "Match/MatchGameMode.h"
 
-#include "ArenaSettings.h"
-#include "SmashCharacter.h"
+#include "Arena/ArenaSettings.h"
+#include "Characters/SmashCharacter.h"
 #include "Arena/ArenaPlayerStart.h"
 #include "Kismet/GameplayStatics.h"
 
