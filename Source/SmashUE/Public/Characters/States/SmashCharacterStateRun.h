@@ -5,14 +5,14 @@
 #include "CoreMinimal.h"
 #include "Characters/SmashCharacterState.h"
 #include "UObject/Object.h"
-#include "SmashCharacterStateWalk.generated.h"
+#include "SmashCharacterStateRun.generated.h"
 
 class UCharacterMovementComponent;
 /**
  * 
  */
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
-class SMASHUE_API USmashCharacterStateWalk : public USmashCharacterState
+class SMASHUE_API USmashCharacterStateRun : public USmashCharacterState
 {
 	GENERATED_BODY()
 
@@ -26,9 +26,9 @@ public:
 	virtual void StateExit(ESmashCharacterStateID NextStateID) override;
 
 	virtual void StateTick(float DeltaTime) override;
-
+	
 	UPROPERTY(EditAnywhere)
-	float Speed = 2.f;
+	float Speed = 5.f;
 
 	UPROPERTY()
 	TObjectPtr<UCharacterMovementComponent> MovementComponent;

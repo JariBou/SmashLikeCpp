@@ -36,4 +36,10 @@ protected:
 	
 	UPROPERTY()
 	TObjectPtr<USmashCharacterStateMachine> StateMachine;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<UAnimMontage> Montage;
+
+	UPROPERTY()
+	TObjectPtr<USkeletalMeshComponent> SkeletalMeshComponent;
 };

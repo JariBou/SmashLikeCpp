@@ -30,8 +30,8 @@ void USmashCharacterStateMachine::ChangeState(ESmashCharacterStateID NextStateID
 	if (CurrentState != nullptr) CurrentState->StateExit(NextStateID);
 
 	ESmashCharacterStateID PreviousStateID = CurrentStateID;
-	CurrentStateID = NextStateID;
 	CurrentState = NextState;
+	CurrentStateID = NextStateID;
 
 	if (CurrentState != nullptr) CurrentState->StateEnter(PreviousStateID);
 }

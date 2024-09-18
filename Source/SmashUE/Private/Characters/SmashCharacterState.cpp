@@ -3,6 +3,7 @@
 
 #include "SmashCharacterState.h"
 
+#include "Characters/SmashCharacter.h"
 #include "Characters/SmashCharacterStateID.h"
 #include "Characters/SmashCharacterStateMachine.h"
 
@@ -27,10 +28,13 @@ void USmashCharacterState::StateInit(USmashCharacterStateMachine* InStateMachine
 	StateMachine = InStateMachine;
 	Character = InStateMachine->GetCharacter();
 	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Magenta, FString::Printf(TEXT("Init State %d"), GetStateID()));
+
+	SkeletalMeshComponent = Character->FindComponentByClass<USkeletalMeshComponent>();
 }
 
 void USmashCharacterState::StateEnter(ESmashCharacterStateID PreviousStateID)
 {
+	SkeletalMeshComponent->GetAnimInstance()->Montage_Play(Montage);
 }
 
 void USmashCharacterState::StateExit(ESmashCharacterStateID NextStateID)
