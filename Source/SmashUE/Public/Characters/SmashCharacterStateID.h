@@ -11,4 +11,6 @@ enum class ESmashCharacterStateID : uint8
 	Idle = 1,
 	Walk = 2,
 	Run = 3,
+	Jump = 4,
+	Fall = 5,
 };

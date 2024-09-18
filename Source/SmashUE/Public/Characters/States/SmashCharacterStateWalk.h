@@ -22,7 +22,7 @@ public:
 	virtual void StateInit(USmashCharacterStateMachine* InStateMachine) override;
 
 	virtual void StateEnter(ESmashCharacterStateID PreviousStateID) override;
-
+	
 	virtual void StateExit(ESmashCharacterStateID NextStateID) override;
 
 	virtual void StateTick(float DeltaTime) override;
@@ -30,6 +30,9 @@ public:
 	UFUNCTION()
 	void OnInputMoveXFast(float X);
 
+	UFUNCTION()
+	void OnInputJump();
+	
 	UPROPERTY(EditAnywhere)
 	float MaxSpeed = 500.f;
 

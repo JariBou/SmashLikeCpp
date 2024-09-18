@@ -47,14 +47,6 @@ void USmashCharacterStateRun::StateTick(float DeltaTime)
 {
 	Super::StateTick(DeltaTime);
 
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		3.f,
-		FColor::Green,
-		TEXT("Tick StateRun"));
-
-	const USmashCharacterSettings* SMSettings = GetDefault<USmashCharacterSettings>();
-
 	if (FMath::Abs(Character->GetInputMoveX()) < SMSettings->XAxisThreshold)
 	{
 		StateMachine->ChangeState(ESmashCharacterStateID::Idle);

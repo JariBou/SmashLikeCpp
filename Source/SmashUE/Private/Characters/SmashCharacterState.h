@@ -8,6 +8,7 @@
 #include "SmashCharacterState.generated.h"
 
 
+class USmashCharacterSettings;
 class ASmashCharacter;
 class USmashCharacterStateMachine;
 
@@ -21,6 +22,8 @@ public:
 	USmashCharacterState();
 
 	virtual ESmashCharacterStateID GetStateID();
+
+	virtual inline bool CanFall() const;
 
 	virtual void StateInit(USmashCharacterStateMachine* InStateMachine);
 
@@ -41,5 +44,5 @@ protected:
 	TObjectPtr<UAnimMontage> Montage;
 
 	UPROPERTY()
-	TObjectPtr<USkeletalMeshComponent> SkeletalMeshComponent;
+	const USmashCharacterSettings* SMSettings;
 };
