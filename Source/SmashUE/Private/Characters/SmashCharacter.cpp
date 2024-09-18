@@ -13,6 +13,7 @@ ASmashCharacter::ASmashCharacter()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	JumpsLeft = NumberOfJumps;
 }
 
 // Called when the game starts or when spawned
@@ -52,6 +53,17 @@ float ASmashCharacter::GetOrientX() const
 void ASmashCharacter::SetOrientX(float NewOrientX)
 {
 	OrientX = NewOrientX;
+}
+
+void ASmashCharacter::ResetJumps(int RecoveredJumps)
+{
+	if (RecoveredJumps < 0)
+	{
+		JumpsLeft = NumberOfJumps;
+	} else
+	{
+		JumpsLeft = FMath::Min(NumberOfJumps, JumpsLeft + RecoveredJumps);
+	}
 }
 
 void ASmashCharacter::RotateMeshUsingOrientX() const
@@ -103,6 +115,12 @@ void ASmashCharacter::OnInputMoveX(const FInputActionValue& InputActionValue)
 	InputMoveX = InputActionValue.Get<float>();
 }
 
+void ASmashCharacter::OnFastFallInput(const FInputActionValue& InputActionValue)
+{
+	FastFallPressedTime = GetWorld()->GetTime().GetRealTimeSeconds();
+	InputFastFallEvent.Broadcast();
+}
+
 void ASmashCharacter::BindInputMoveXAxisAndActions(UEnhancedInputComponent* EnhancedInputComponent)
 {
 	if (InputData == nullptr) return;
@@ -141,9 +159,27 @@ void ASmashCharacter::BindInputMoveXAxisAndActions(UEnhancedInputComponent* Enha
 	{
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionJump,
-			ETriggerEvent::Triggered,
+			ETriggerEvent::Started,
 			this,
 			&ASmashCharacter::OnInputJump);
+	}
+
+	if (InputData->InputActionJumpFast)
+	{
+		EnhancedInputComponent->BindAction(
+			InputData->InputActionJumpFast,
+			ETriggerEvent::Started,
+			this,
+			&ASmashCharacter::OnInputJump);
+	}
+
+	if (InputData->InputActionFastFall)
+	{
+		EnhancedInputComponent->BindAction(
+			InputData->InputActionFastFall,
+			ETriggerEvent::Triggered,
+			this,
+			&ASmashCharacter::OnFastFallInput);
 	}
 }
 
@@ -151,6 +187,27 @@ void ASmashCharacter::OnInputMoveXFast(const FInputActionValue& InputActionValue
 {
 	InputMoveX = InputActionValue.Get<float>();
 	InputMoveXFastEvent.Broadcast(InputMoveX);
+}
+
+bool ASmashCharacter::CanDoJump() const
+{
+	return JumpsLeft > 0;
+}
+
+void ASmashCharacter::ConsumeJump()
+{
+	JumpsLeft--;
+}
+
+void ASmashCharacter::DoJump()
+{
+	Jump();
+	ConsumeJump();
+}
+
+bool ASmashCharacter::ShouldFastFall() const
+{
+	return (GetWorld()->GetTime().GetRealTimeSeconds() - FastFallPressedTime) < FastFallWindowTime;
 }
 
 void ASmashCharacter::OnInputJump(const FInputActionValue& InputActionValue)

@@ -41,6 +41,8 @@ public:
 	float GetOrientX() const;
 
 	void SetOrientX(float NewOrientX);
+	
+	void ResetJumps(int NumberOfJumps);
 
 protected:
 	UPROPERTY(EditAnywhere)
@@ -99,6 +101,8 @@ protected:
 private:
 	void OnInputMoveX(const FInputActionValue& InputActionValue);
 
+	void OnFastFallInput(const FInputActionValue& InputActionValue);
+	
 	void BindInputMoveXAxisAndActions(UEnhancedInputComponent* EnhancedInputComponent);
 	
 	void OnInputMoveXFast(const FInputActionValue& InputActionValue);
@@ -107,10 +111,36 @@ private:
 #pragma endregion
 
 #pragma region Jump
+public:
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FInputJumpEvent);
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FInputFastFallEvent);
 	
 	UPROPERTY()
 	FInputJumpEvent InputJumpEvent;
+	
+	UPROPERTY()
+	FInputFastFallEvent InputFastFallEvent;
+
+	bool CanDoJump() const;
+
+	void ConsumeJump();
+
+	void DoJump();
+
+	bool ShouldFastFall() const;
+
+private:
+	UPROPERTY(EditAnywhere)
+	int NumberOfJumps = 2;
+
+	UPROPERTY()
+	int JumpsLeft;
+
+	UPROPERTY()
+	float FastFallPressedTime = 0.f;
+
+	UPROPERTY()
+	float FastFallWindowTime = .5;
 	
 	void OnInputJump(const FInputActionValue& InputActionValue);
 

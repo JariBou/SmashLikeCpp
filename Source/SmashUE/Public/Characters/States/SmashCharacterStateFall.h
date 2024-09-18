@@ -18,6 +18,12 @@ class SMASHUE_API USmashCharacterStateFall : public USmashCharacterState
 	virtual ESmashCharacterStateID GetStateID() override;
 
 	virtual bool CanFall() const override;
+
+	UFUNCTION()
+	void OnInputJump();
+
+	UFUNCTION()
+	void OnFastFallInput();
 	
 	virtual void StateEnter(ESmashCharacterStateID PreviousStateID) override;
 	
