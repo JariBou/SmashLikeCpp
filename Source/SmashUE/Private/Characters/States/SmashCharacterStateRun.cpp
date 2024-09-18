@@ -20,6 +20,8 @@ void USmashCharacterStateRun::StateInit(USmashCharacterStateMachine* InStateMach
 void USmashCharacterStateRun::StateEnter(ESmashCharacterStateID PreviousStateID)
 {
 	Super::StateEnter(PreviousStateID);
+
+	Character->GetCharacterMovement()->MaxWalkSpeed = MaxSpeed;
 	
 	GEngine->AddOnScreenDebugMessage(
 		-1,
@@ -43,13 +45,11 @@ void USmashCharacterStateRun::StateTick(float DeltaTime)
 {
 	Super::StateTick(DeltaTime);
 
-	
-	FVector MovementVector = FVector(Speed * Character->GetOrientX() * -1, 0, 0);
-	MovementComponent->ApplyWorldOffset(MovementVector, false);
-
 	GEngine->AddOnScreenDebugMessage(
 		-1,
 		3.f,
 		FColor::Green,
 		TEXT("Tick StateRun"));
+
+	Character->AddMovementInput(FVector::ForwardVector, Character->GetOrientX());
 }

@@ -4,6 +4,7 @@
 #include "Characters/States/SmashCharacterStateWalk.h"
 
 #include "Characters/SmashCharacter.h"
+#include "Characters/SmashCharacterStateMachine.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 ESmashCharacterStateID USmashCharacterStateWalk::GetStateID()
@@ -20,6 +21,8 @@ void USmashCharacterStateWalk::StateInit(USmashCharacterStateMachine* InStateMac
 void USmashCharacterStateWalk::StateEnter(ESmashCharacterStateID PreviousStateID)
 {
 	Super::StateEnter(PreviousStateID);
+
+	Character->GetCharacterMovement()->MaxWalkSpeed = MaxSpeed;
 
 	GEngine->AddOnScreenDebugMessage(
 		-1,
@@ -42,13 +45,19 @@ void USmashCharacterStateWalk::StateExit(ESmashCharacterStateID NextStateID)
 void USmashCharacterStateWalk::StateTick(float DeltaTime)
 {
 	Super::StateTick(DeltaTime);
-	
-	FVector MovementVector = FVector(Speed * Character->GetOrientX() * -1, 0, 0);
-	MovementComponent->ApplyWorldOffset(MovementVector, false);
 
 	GEngine->AddOnScreenDebugMessage(
 		-1,
 		3.f,
 		FColor::Green,
 		TEXT("Tick StateWalk"));
+
+	if (FMath::Abs(Character->GetInputMoveX()) < .1f)
+	{
+		StateMachine->ChangeState(ESmashCharacterStateID::Idle);
+	} else
+	{
+		Character->SetOrientX(Character->GetInputMoveX());
+		Character->AddMovementInput(FVector::ForwardVector, Character->GetOrientX());
+	}
 }

@@ -28,7 +28,7 @@ public:
 	virtual void StateTick(float DeltaTime) override;
 	
 	UPROPERTY(EditAnywhere)
-	float Speed = 5.f;
+	float MaxSpeed = 1000.f;
 
 	UPROPERTY()
 	TObjectPtr<UCharacterMovementComponent> MovementComponent;
