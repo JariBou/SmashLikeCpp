@@ -4,7 +4,10 @@
 #include "Characters/SmashCharacterStateMachine.h"
 
 #include "SmashCharacterState.h"
+#include "SmashCharacterStateSettings.h"
 #include "Characters/SmashCharacter.h"
+#include "Characters/SmashCharacterSettings.h"
+#include "Logging/StructuredLog.h"
 
 void USmashCharacterStateMachine::Init(ASmashCharacter* InCharacter)
 {
@@ -53,15 +56,48 @@ ASmashCharacter* USmashCharacterStateMachine::GetCharacter() const
 
 void USmashCharacterStateMachine::FindStates()
 {
-	TArray<UActorComponent*> FoundComponents = Character->K2_GetComponentsByClass(USmashCharacterState::StaticClass());
-	for (UActorComponent* StateComponent : FoundComponents)
-	{
-		USmashCharacterState* State = Cast<USmashCharacterState>(StateComponent);
-		if (State == nullptr) continue;
-		if (State->GetStateID() == ESmashCharacterStateID::None) continue;
+	// TArray<UActorComponent*> FoundComponents = Character->K2_GetComponentsByClass(USmashCharacterState::StaticClass());
+	
+	TArray<ESmashCharacterStateID> PossibleStates;
+	const USmashCharacterSettings* SMSettings = GetDefault<USmashCharacterSettings>();
+	SMSettings->StateMap.GetKeys(PossibleStates);
 
-		AllStates.Add(State);
+	if (PossibleStates.IsEmpty()) return;
+	
+	for (const ESmashCharacterStateID State : PossibleStates)
+	{
+		if (State == ESmashCharacterStateID::None) continue;
+		const FSmashCharacterStateSettings* StateSettings;
+		if (Character->OverrideStates.Contains(State))
+		{
+			StateSettings = Character->OverrideStates.Find(State);
+			// USmashCharacterState* NewState = NewObject<USmashCharacterState>(this, *SubclassOf);
+			// NewState->SetMontage(nullptr);
+			// AllStates.Add(NewState);
+			
+			// Soooo.... we need a *.... why??
+			// AllStates.Add(Cast<USmashCharacterState>(SubclassOf));
+		} else
+		{
+			StateSettings = SMSettings->StateMap.Find(State);
+			// USmashCharacterState* NewState = NewObject<USmashCharacterState>(this, *SubclassOf);
+			// NewState->SetMontage(nullptr);
+			// AllStates.Add(NewState);
+		}
+
+		USmashCharacterState* NewState = NewObject<USmashCharacterState>(this, *StateSettings->State);
+		NewState->SetMontage(StateSettings->Montage);
+		AllStates.Add(NewState);
 	}
+	
+	// for (UActorComponent* StateComponent : FoundComponents)
+	// {
+	// 	USmashCharacterState* State = Cast<USmashCharacterState>(StateComponent);
+	// 	if (State == nullptr) continue;
+	// 	if (State->GetStateID() == ESmashCharacterStateID::None) continue;
+	//
+	// 	AllStates.Add(State);
+	// }
 }
 
 void USmashCharacterStateMachine::InitStates()

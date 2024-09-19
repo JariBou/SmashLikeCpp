@@ -3,6 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "SmashCharacterStateID.h"
+#include "SmashCharacterStateSettings.h"
+#include "Characters/SmashCharacterState.h"
 #include "Engine/DeveloperSettings.h"
 #include "SmashCharacterSettings.generated.h"
 
@@ -25,4 +28,7 @@ public:
 
 	UPROPERTY(Config, EditAnywhere, Category = "Inputs")
 	float XAxisThreshold = .1f;
+
+	UPROPERTY(Config, EditAnywhere, Category = "Characters")
+	TMap<ESmashCharacterStateID, FSmashCharacterStateSettings> StateMap;
 };

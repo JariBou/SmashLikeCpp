@@ -2,6 +2,7 @@
 
 
 #include "Characters/SmashCharacter.h"
+#include "Characters/SmashCharacterState.h"
 
 #include "Characters/SmashCharacterStateMachine.h"
 #include "EnhancedInputSubsystems.h"

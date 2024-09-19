@@ -34,6 +34,7 @@ protected:
 	UPROPERTY()
 	TObjectPtr<ASmashCharacter> Character;
 
+	UPROPERTY()
 	TArray<USmashCharacterState*> AllStates;
 
 	UPROPERTY(BlueprintReadOnly)

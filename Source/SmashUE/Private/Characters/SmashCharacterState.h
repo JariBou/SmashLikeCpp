@@ -13,7 +13,7 @@ class ASmashCharacter;
 class USmashCharacterStateMachine;
 
 UCLASS(Abstract)
-class SMASHUE_API USmashCharacterState : public UActorComponent
+class SMASHUE_API USmashCharacterState : public UObject
 {
 	GENERATED_BODY()
 
@@ -32,6 +32,8 @@ public:
 	virtual void StateExit(ESmashCharacterStateID NextStateID);
 
 	virtual void StateTick(float DeltaTime);
+	
+	void SetMontage(TObjectPtr<UAnimMontage> NewMontage);
 
 protected:
 	UPROPERTY()
@@ -46,3 +48,5 @@ protected:
 	UPROPERTY()
 	const USmashCharacterSettings* SMSettings;
 };
+
+

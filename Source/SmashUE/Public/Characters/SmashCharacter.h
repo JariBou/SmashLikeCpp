@@ -4,9 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "InputActionValue.h"
+#include "SmashCharacterStateSettings.h"
 #include "GameFramework/Character.h"
 #include "SmashCharacter.generated.h"
 
+enum class ESmashCharacterStateID : uint8;
+class USmashCharacterState;
 class USmashCharacterInputData;
 class UInputMappingContext;
 class USmashCharacterStateMachine;
@@ -21,6 +24,9 @@ class SMASHUE_API ASmashCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	ASmashCharacter();
+
+	UPROPERTY(EditAnywhere)
+	TMap<ESmashCharacterStateID, FSmashCharacterStateSettings> OverrideStates;
 
 protected:
 	// Called when the game starts or when spawned
