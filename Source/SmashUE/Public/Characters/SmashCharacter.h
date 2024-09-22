@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "InputActionValue.h"
-#include "SmashCharacterStateSettings.h"
 #include "GameFramework/Character.h"
 #include "SmashCharacter.generated.h"
 
@@ -26,7 +25,7 @@ public:
 	ASmashCharacter();
 
 	UPROPERTY(EditAnywhere)
-	TMap<ESmashCharacterStateID, FSmashCharacterStateSettings> OverrideStates;
+	TMap<ESmashCharacterStateID, TSubclassOf<USmashCharacterState>> OverrideStates;
 
 protected:
 	// Called when the game starts or when spawned
@@ -47,8 +46,6 @@ public:
 	float GetOrientX() const;
 
 	void SetOrientX(float NewOrientX);
-	
-	void ResetJumps(int NumberOfJumps);
 
 protected:
 	UPROPERTY(EditAnywhere)
@@ -127,21 +124,9 @@ public:
 	UPROPERTY()
 	FInputFastFallEvent InputFastFallEvent;
 
-	bool CanDoJump() const;
-
-	void ConsumeJump();
-
-	void DoJump();
-
 	bool ShouldFastFall() const;
 
 private:
-	UPROPERTY(EditAnywhere)
-	int NumberOfJumps = 2;
-
-	UPROPERTY()
-	int JumpsLeft;
-
 	UPROPERTY()
 	float FastFallPressedTime = 0.f;
 

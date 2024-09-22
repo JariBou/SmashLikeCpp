@@ -32,8 +32,6 @@ public:
 	virtual void StateExit(ESmashCharacterStateID NextStateID);
 
 	virtual void StateTick(float DeltaTime);
-	
-	void SetMontage(TObjectPtr<UAnimMontage> NewMontage);
 
 protected:
 	UPROPERTY()

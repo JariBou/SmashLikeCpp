@@ -20,7 +20,6 @@ void USmashCharacterStateIdle::StateEnter(ESmashCharacterStateID PreviousStateID
 
 	Character->InputMoveXFastEvent.AddDynamic(this, &USmashCharacterStateIdle::OnInputMoveXFast);
 	Character->InputJumpEvent.AddDynamic(this, &USmashCharacterStateIdle::OnInputJump);
-	Character->ResetJumps(-1);
 
 	GEngine->AddOnScreenDebugMessage(
 		-1,
@@ -60,5 +59,5 @@ void USmashCharacterStateIdle::OnInputMoveXFast(float InputMoveX)
 
 void USmashCharacterStateIdle::OnInputJump()
 {
-	if (Character->CanDoJump())	StateMachine->ChangeState(ESmashCharacterStateID::Jump);
+	if (Character->CanJump())	StateMachine->ChangeState(ESmashCharacterStateID::Jump);
 }

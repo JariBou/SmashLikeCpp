@@ -24,7 +24,6 @@ void USmashCharacterStateRun::StateEnter(ESmashCharacterStateID PreviousStateID)
 	Super::StateEnter(PreviousStateID);
 
 	Character->GetCharacterMovement()->MaxWalkSpeed = MaxSpeed;
-	Character->ResetJumps(-1);
 
 	GEngine->AddOnScreenDebugMessage(
 		-1,

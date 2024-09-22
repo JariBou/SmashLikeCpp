@@ -20,7 +20,7 @@ bool USmashCharacterStateJump::CanFall() const
 
 void USmashCharacterStateJump::OnInputJump()
 {
-	if (Character->CanDoJump()) StateMachine->ChangeState(ESmashCharacterStateID::Jump);
+	if (Character->CanJump()) StateMachine->ChangeState(ESmashCharacterStateID::Jump);
 }
 
 void USmashCharacterStateJump::OnFastFallInput()
@@ -35,7 +35,7 @@ void USmashCharacterStateJump::StateEnter(ESmashCharacterStateID PreviousStateID
 	Character->GetCharacterMovement()->AirControl = JumpAirControl;
 	Character->GetCharacterMovement()->JumpZVelocity = 2 * JumpMaxHeight / JumpDuration;
 	Character->GetCharacterMovement()->GravityScale = (-2 * JumpMaxHeight / (JumpDuration*JumpDuration)) / BaseGravityValue;
-	Character->DoJump();
+	Character->Jump();
 	Character->InputJumpEvent.AddDynamic(this, &USmashCharacterStateJump::OnInputJump);
 	Character->InputFastFallEvent.AddDynamic(this, &USmashCharacterStateJump::OnFastFallInput);
 }

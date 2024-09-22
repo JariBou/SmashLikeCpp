@@ -14,7 +14,6 @@ ASmashCharacter::ASmashCharacter()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	JumpsLeft = NumberOfJumps;
 }
 
 // Called when the game starts or when spawned
@@ -54,17 +53,6 @@ float ASmashCharacter::GetOrientX() const
 void ASmashCharacter::SetOrientX(float NewOrientX)
 {
 	OrientX = NewOrientX;
-}
-
-void ASmashCharacter::ResetJumps(int RecoveredJumps)
-{
-	if (RecoveredJumps < 0)
-	{
-		JumpsLeft = NumberOfJumps;
-	} else
-	{
-		JumpsLeft = FMath::Min(NumberOfJumps, JumpsLeft + RecoveredJumps);
-	}
 }
 
 void ASmashCharacter::RotateMeshUsingOrientX() const
@@ -129,10 +117,10 @@ void ASmashCharacter::BindInputMoveXAxisAndActions(UEnhancedInputComponent* Enha
 	if (InputData->InputActionMoveX)
 	{
 		EnhancedInputComponent->BindAction(
-		InputData->InputActionMoveX,
-		ETriggerEvent::Started,
-		this,
-		&ASmashCharacter::OnInputMoveX);
+			InputData->InputActionMoveX,
+			ETriggerEvent::Started,
+			this,
+			&ASmashCharacter::OnInputMoveX);
 
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionMoveX,
@@ -169,7 +157,7 @@ void ASmashCharacter::BindInputMoveXAxisAndActions(UEnhancedInputComponent* Enha
 	{
 		EnhancedInputComponent->BindAction(
 			InputData->InputActionJumpFast,
-			ETriggerEvent::Started,
+			ETriggerEvent::Triggered,
 			this,
 			&ASmashCharacter::OnInputJump);
 	}
@@ -188,22 +176,6 @@ void ASmashCharacter::OnInputMoveXFast(const FInputActionValue& InputActionValue
 {
 	InputMoveX = InputActionValue.Get<float>();
 	InputMoveXFastEvent.Broadcast(InputMoveX);
-}
-
-bool ASmashCharacter::CanDoJump() const
-{
-	return JumpsLeft > 0;
-}
-
-void ASmashCharacter::ConsumeJump()
-{
-	JumpsLeft--;
-}
-
-void ASmashCharacter::DoJump()
-{
-	Jump();
-	ConsumeJump();
 }
 
 bool ASmashCharacter::ShouldFastFall() const

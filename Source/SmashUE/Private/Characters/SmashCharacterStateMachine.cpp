@@ -4,7 +4,6 @@
 #include "Characters/SmashCharacterStateMachine.h"
 
 #include "SmashCharacterState.h"
-#include "SmashCharacterStateSettings.h"
 #include "Characters/SmashCharacter.h"
 #include "Characters/SmashCharacterSettings.h"
 #include "Logging/StructuredLog.h"
@@ -67,10 +66,10 @@ void USmashCharacterStateMachine::FindStates()
 	for (const ESmashCharacterStateID State : PossibleStates)
 	{
 		if (State == ESmashCharacterStateID::None) continue;
-		const FSmashCharacterStateSettings* StateSettings;
+		const TSubclassOf<USmashCharacterState>* StateObject;
 		if (Character->OverrideStates.Contains(State))
 		{
-			StateSettings = Character->OverrideStates.Find(State);
+			StateObject = Character->OverrideStates.Find(State);
 			// USmashCharacterState* NewState = NewObject<USmashCharacterState>(this, *SubclassOf);
 			// NewState->SetMontage(nullptr);
 			// AllStates.Add(NewState);
@@ -79,14 +78,13 @@ void USmashCharacterStateMachine::FindStates()
 			// AllStates.Add(Cast<USmashCharacterState>(SubclassOf));
 		} else
 		{
-			StateSettings = SMSettings->StateMap.Find(State);
+			StateObject = SMSettings->StateMap.Find(State);
 			// USmashCharacterState* NewState = NewObject<USmashCharacterState>(this, *SubclassOf);
 			// NewState->SetMontage(nullptr);
 			// AllStates.Add(NewState);
 		}
 
-		USmashCharacterState* NewState = NewObject<USmashCharacterState>(this, *StateSettings->State);
-		NewState->SetMontage(StateSettings->Montage);
+		USmashCharacterState* NewState = NewObject<USmashCharacterState>(this, *StateObject);
 		AllStates.Add(NewState);
 	}
 	

@@ -53,9 +53,3 @@ void USmashCharacterState::StateTick(float DeltaTime)
 	}
 }
 
-void USmashCharacterState::SetMontage(TObjectPtr<UAnimMontage> NewMontage)
-{
-	Montage = NewMontage;
-}
-
-

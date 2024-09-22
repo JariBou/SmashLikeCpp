@@ -7,7 +7,7 @@
 #include "SmashCharacterStateIdle.generated.h"
 
 
-UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
+UCLASS(BlueprintType, Blueprintable, Abstract)
 class SMASHUE_API USmashCharacterStateIdle : public USmashCharacterState
 {
 	GENERATED_BODY()

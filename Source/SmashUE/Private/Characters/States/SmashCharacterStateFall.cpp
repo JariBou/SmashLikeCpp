@@ -7,6 +7,7 @@
 #include "Characters/SmashCharacterSettings.h"
 #include "Characters/SmashCharacterStateMachine.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Logging/StructuredLog.h"
 
 ESmashCharacterStateID USmashCharacterStateFall::GetStateID()
 {
@@ -20,7 +21,7 @@ bool USmashCharacterStateFall::CanFall() const
 
 void USmashCharacterStateFall::OnInputJump()
 {
-	if (Character->CanDoJump()) StateMachine->ChangeState(ESmashCharacterStateID::Jump);
+	if (Character->CanJump()) StateMachine->ChangeState(ESmashCharacterStateID::Jump);
 }
 
 void USmashCharacterStateFall::OnFastFallInput()
@@ -33,7 +34,6 @@ void USmashCharacterStateFall::StateEnter(ESmashCharacterStateID PreviousStateID
 	Super::StateEnter(PreviousStateID);
 	Character->GetCharacterMovement()->AirControl = FallAirControl;
 	Character->GetCharacterMovement()->GravityScale = Character->ShouldFastFall() ? FastFallGravityScale : FallGravityScale;
-	if(PreviousStateID != ESmashCharacterStateID::Jump) Character->ConsumeJump();
 
 	Character->InputJumpEvent.AddDynamic(this, &USmashCharacterStateFall::OnInputJump);
 	Character->InputFastFallEvent.AddDynamic(this, &USmashCharacterStateFall::OnFastFallInput);
