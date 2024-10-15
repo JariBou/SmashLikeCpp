@@ -28,6 +28,8 @@ protected:
 	
 	
 private:
+	void CreateAndInitPlayers() const;
+	
 	USmashCharacterInputData* LoadInputDataFromConfig();
 
 	UInputMappingContext* LoadInputMappingContextFromConfig();
