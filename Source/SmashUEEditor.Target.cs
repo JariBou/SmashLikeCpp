@@ -16,6 +16,6 @@ public class SmashUEEditorTarget : TargetRules
 
 	private void RegisterModulesCreatedByRider()
 	{
-		ExtraModuleNames.AddRange(new string[] { "LocalMultiplayer" });
+		// ExtraModuleNames.AddRange(new string[] { "LocalMultiplayer" });
 	}
 }

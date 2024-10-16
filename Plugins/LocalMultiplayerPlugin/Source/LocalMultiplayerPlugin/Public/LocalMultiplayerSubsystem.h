@@ -11,7 +11,7 @@ enum class ELocalMultiplayerInputMappingType;
  * 
  */
 UCLASS()
-class LOCALMULTIPLAYER_API ULocalMultiplayerSubsystem : public UGameInstanceSubsystem
+class LOCALMULTIPLAYERPLUGIN_API ULocalMultiplayerSubsystem : public UGameInstanceSubsystem
 {
 	GENERATED_BODY()
 

@@ -8,11 +8,6 @@
 			"Name": "SmashUE",
 			"Type": "Runtime",
 			"LoadingPhase": "Default"
-		},
-		{
-			"Name": "LocalMultiplayer",
-			"Type": "Runtime",
-			"LoadingPhase": "Default"
 		}
 	],
 	"Plugins": [
@@ -22,6 +17,10 @@
 			"TargetAllowList": [
 				"Editor"
 			]
+		},
+		{
+			"Name": "LocalMultiplayerPlugin",
+			"Enabled": true
 		}
 	]
 }

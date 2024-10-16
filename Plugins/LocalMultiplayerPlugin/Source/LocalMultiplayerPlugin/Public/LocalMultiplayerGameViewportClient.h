@@ -12,7 +12,7 @@ class ULocalMultiplayerSettings;
  * 
  */
 UCLASS()
-class LOCALMULTIPLAYER_API ULocalMultiplayerGameViewportClient : public UGameViewportClient
+class LOCALMULTIPLAYERPLUGIN_API ULocalMultiplayerGameViewportClient : public UGameViewportClient
 {
 private:
 	GENERATED_BODY()

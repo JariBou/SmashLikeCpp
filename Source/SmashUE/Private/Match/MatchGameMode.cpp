@@ -3,15 +3,16 @@
 
 #include "Match/MatchGameMode.h"
 
-#include "Arena/ArenaSettings.h"
-#include "Characters/SmashCharacter.h"
-#include "Arena/ArenaPlayerStart.h"
-#include "Characters/SmashCharacterInputData.h"
-#include "Characters/SmashCharacterSettings.h"
-#include "Kismet/GameplayStatics.h"
-#include "InputMappingContext.h"
 #include "LocalMultiplayerSettings.h"
 #include "LocalMultiplayerSubsystem.h"
+#include "Arena/ArenaPlayerStart.h"
+#include "Arena/ArenaSettings.h"
+#include "Characters/SmashCharacter.h"
+#include "Characters/SmashCharacterSettings.h"
+#include "Characters/SmashCharacterInputData.h"
+#include "Kismet/GameplayStatics.h"
+#include "InputMappingContext.h"
+
 
 void AMatchGameMode::BeginPlay()
 {
@@ -76,8 +77,6 @@ void AMatchGameMode::FindPlayerStartActorsInArena(TArray<AArenaPlayerStart*>& Ou
 void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoints)
 {
 	USmashCharacterInputData* InputData = LoadInputDataFromConfig();
-	UInputMappingContext* InputMappingContext = LoadInputMappingContextFromConfig();
-
 	
 	for (AArenaPlayerStart* SpawnPoint : SpawnPoints)
 	{
@@ -89,7 +88,6 @@ void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoin
 		if (NewCharacter == nullptr) continue;
 
 		NewCharacter->InputData = InputData;
-		//NewCharacter->InputMappingContext = InputMappingContext;
 		NewCharacter->AutoPossessPlayer = SpawnPoint->AutoReceiveInput;
 		NewCharacter->SetOrientX(SpawnPoint->GetStartOrientX());
 		NewCharacter->FinishSpawning(SpawnPoint->GetTransform());
@@ -101,7 +99,6 @@ void AMatchGameMode::SpawnCharacters(const TArray<AArenaPlayerStart*>& SpawnPoin
 TSubclassOf<ASmashCharacter> AMatchGameMode::GetSmashCharacterClassFromInputType(
 	EAutoReceiveInput::Type InputType) const
 {
-
 	const UArenaSettings* ArenaSettings = GetDefault<UArenaSettings>();
 	
 	switch (InputType)

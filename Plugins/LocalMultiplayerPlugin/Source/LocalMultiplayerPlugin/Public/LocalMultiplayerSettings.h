@@ -40,7 +40,7 @@ public:
 
 
 UCLASS(Config = Game, DefaultConfig, meta = (DisplayName = "Local Multiplayer Settings"))
-class LOCALMULTIPLAYER_API ULocalMultiplayerSettings : public UDeveloperSettings
+class LOCALMULTIPLAYERPLUGIN_API ULocalMultiplayerSettings : public UDeveloperSettings
 {
 	GENERATED_BODY()
 
