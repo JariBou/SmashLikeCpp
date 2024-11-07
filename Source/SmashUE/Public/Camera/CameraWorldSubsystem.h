@@ -32,6 +32,8 @@ protected:
 	UPROPERTY()
 	TObjectPtr<UCameraComponent> CameraMain;
 
+	void TickUpdateCameraZoom(float DeltaTime);
+	
 	void TickUpdateCameraPosition(float DeltaTime);
 	
 	UCameraComponent* FindCameraByTag(const FName& Tag) const;
@@ -48,13 +50,31 @@ public:
 protected:
 	UPROPERTY()
 	TArray<UObject*> FollowTargets;
+	
+	FVector CalculateAveragePositionBetweenTargets();
+
+	float CalculateGreatestDistanceBetweenTargets();
 
 #pragma endregion
 
 
-#pragma region Misc
+#pragma region Zoom
 protected:
-	FVector CalculateAveragePositionBetweenTargets();
+	UPROPERTY()
+	float CameraZoomYMin = 0.f;
+
+	UPROPERTY()
+	float CameraZoomYMax = 0.f;
+
+	UPROPERTY()
+	float CameraZoomDistanceBetweenTargetsMin = 300.f;
+
+	UPROPERTY()
+	float CameraZoomDistanceBetweenTargetsMax = 1500.f;
+
+	UFUNCTION()
+	void InitCameraZoomParameters();
+	
 	
 #pragma endregion
 
