@@ -11,7 +11,7 @@ class UCameraComponent;
  * 
  */
 UCLASS()
-class SMASHUE_API UCameraWorldSubsystem : public UTickableWorldSubsystem
+class CAMERASYSTEMPLUGIN_API UCameraWorldSubsystem : public UTickableWorldSubsystem
 {
 	GENERATED_BODY()
 

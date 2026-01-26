@@ -3,10 +3,13 @@
 
 #include "Camera/CameraWorldSubsystem.h"
 
-#include "Camera/CameraActor.h"
 #include "Camera/CameraComponent.h"
 #include "Camera/CameraFollowTarget.h"
 #include "Kismet/GameplayStatics.h"
+#include "Engine/World.h"
+#include "UnrealClient.h"
+#include "Engine/GameViewportClient.h"
+
 
 void UCameraWorldSubsystem::PostInitialize()
 {

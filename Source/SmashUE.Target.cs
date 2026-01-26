@@ -16,6 +16,7 @@ public class SmashUETarget : TargetRules
 
 	private void RegisterModulesCreatedByRider()
 	{
+		//ExtraModuleNames.AddRange(new string[] { "CameraSystem" });
 		// ExtraModuleNames.AddRange(new string[] { "LocalMultiplayer" });
 	}
 }

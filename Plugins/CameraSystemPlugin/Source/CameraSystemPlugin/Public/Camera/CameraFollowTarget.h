@@ -16,7 +16,7 @@ class UCameraFollowTarget : public UInterface
 /**
  * 
  */
-class SMASHUE_API ICameraFollowTarget
+class CAMERASYSTEMPLUGIN_API ICameraFollowTarget
 {
 	GENERATED_BODY()
 
